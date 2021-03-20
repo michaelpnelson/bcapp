@@ -1,0 +1,17 @@
+version: '3.1'
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: michael
+      MYQL_DATABASE: bcapp
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 3366:8080

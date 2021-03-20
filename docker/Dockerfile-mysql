@@ -1,0 +1,3 @@
+FROM mysql
+
+COPY bcapp.sql /docker-entrypoint-initdb.d/
