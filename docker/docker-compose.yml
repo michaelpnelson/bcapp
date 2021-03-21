@@ -33,6 +33,8 @@ services:
   environment:
    - SERVER_PORT=8000
    - CONNECTIONSTRING=mongodb://mongo:27017/notes
+   - MYSQL_ROOT_PASSWORD=michael
+   - MYQL_DATABASE=bcapp
   volumes:
    - ./:/app
   command: npm run debug
@@ -49,9 +51,12 @@ services:
   build:
    context: .
    dockerfile: Dockerfile-mysql
-  image: mysql
+  image: mysql-server
   command: --default-authentication-plugin=mysql_native_password
   restart: always
+  ports:
+   - 3306:3306
+   - 33060:33060
   environment:
    MYSQL_ROOT_PASSWORD: michael
    MYQL_DATABASE: bcapp

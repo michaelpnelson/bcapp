@@ -61,17 +61,22 @@ function callOpenMaps(urlQuery) {
 //   console.log(`Server running at http://${hostname}:${port}/`)
 // })
 
-const server = ronin.server()
-
-const mysqlConnection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: process.env.MYSQL_ROOT_PASSWORD,
-  database: process.env.MYQL_DATABASE
-})
-
 function incrementApiCallNumInDatabase() {
-  mysqlConnection.connect()
+  const mysqlConnection = mysql.createConnection({
+    host: '127.0.0.1',
+    port: 3306,
+    user: 'root',
+    password: process.env.MYSQL_ROOT_PASSWORD,
+    database: process.env.MYQL_DATABASE
+  })
+
+  mysqlConnection.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack)
+      return;
+    }
+    console.log('connected as id ' + connection.threadId)
+  })
   mysqlConnection.query('use bcapp; UPDATE api_calls SET num_calls = num_calls + 1;', function(error, results, fields){
     if (error) {
       console.log(error)
@@ -79,6 +84,8 @@ function incrementApiCallNumInDatabase() {
   })
   mysqlConnection.end()
 }
+
+const server = ronin.server()
 
 server.use( '/bcapp', (req, res) => {
   incrementApiCallNumInDatabase()
