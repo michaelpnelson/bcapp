@@ -63,7 +63,7 @@ function callOpenMaps(urlQuery) {
 
 function incrementApiCallNumInDatabase() {
   const mysqlConnection = mysql.createConnection({
-    host: '127.0.0.1',
+    host: 'db',
     port: 3306,
     user: 'root',
     password: process.env.MYSQL_ROOT_PASSWORD,
@@ -75,7 +75,7 @@ function incrementApiCallNumInDatabase() {
       console.error('error connecting: ' + err.stack)
       return;
     }
-    console.log('connected as id ' + connection.threadId)
+    console.log('connected as id ' + mysqlConnection.threadId)
   })
   mysqlConnection.query('use bcapp; UPDATE api_calls SET num_calls = num_calls + 1;', function(error, results, fields){
     if (error) {
