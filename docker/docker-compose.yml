@@ -44,6 +44,18 @@ services:
   volumes:
    - mongodb:/data/db
    - mongodb_config:/data/configdb
+
+ db:
+  build:
+   context: .
+   dockerfile: Dockerfile-mysql
+  image: mysql
+  command: --default-authentication-plugin=mysql_native_password
+  restart: always
+  environment:
+   MYSQL_ROOT_PASSWORD: michael
+   MYQL_DATABASE: bcapp
+
 volumes:
  mongodb:
  mongodb_config:

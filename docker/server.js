@@ -4,6 +4,7 @@ const syncrequest = require('sync-request')
 const ronin     = require( 'ronin-server' )
 const mocks     = require( 'ronin-mocks' )
 const database  = require( 'ronin-database' )
+const mysql = require('mysql')
 
 function validate(urlQuery) {
   // TODO validate data - regexp?
@@ -45,7 +46,7 @@ function callOpenMaps(urlQuery) {
 //     "</html>"
 // }
 
-database.connect( process.env.CONNECTIONSTRING )
+// database.connect( process.env.CONNECTIONSTRING )
 
 // const hostname = '127.0.0.1';
 // const port = 8000;
@@ -62,7 +63,25 @@ database.connect( process.env.CONNECTIONSTRING )
 
 const server = ronin.server()
 
+const mysqlConnection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: process.env.MYSQL_ROOT_PASSWORD,
+  database: process.env.MYQL_DATABASE
+})
+
+function incrementApiCallNumInDatabase() {
+  mysqlConnection.connect()
+  mysqlConnection.query('use bcapp; UPDATE api_calls SET num_calls = num_calls + 1;', function(error, results, fields){
+    if (error) {
+      console.log(error)
+    }
+  })
+  mysqlConnection.end()
+}
+
 server.use( '/bcapp', (req, res) => {
+  incrementApiCallNumInDatabase()
   const urlQuery = url.parse(req.url, true).query
   let errorMessage = validate(urlQuery)
   if (errorMessage) {
