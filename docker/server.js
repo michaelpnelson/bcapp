@@ -1,9 +1,9 @@
+// const http = require('http')
 const url = require('url')
 const syncrequest = require('sync-request')
 const ronin     = require( 'ronin-server' )
 const mocks     = require( 'ronin-mocks' )
 const database  = require( 'ronin-database' )
-const server = ronin.server()
 
 function validate(urlQuery) {
   // TODO validate data - regexp?
@@ -28,7 +28,37 @@ function callOpenMaps(urlQuery) {
   return JSON.parse(body).features[0].properties['CMNTY_HLTH_SERV_AREA_NAME']
 }
 
+// function htmlResponse(responseText) {
+//   return "<!DOCTYPE html>" +
+//     "<html lang='en' dir='ltr'>" +
+//     "  <head>" +
+//     "    <meta charset='utf-8'>" +
+//     "    <title>BC Community Health Service Area Finder</title>" +
+//     "  </head>" +
+//     "  <body>" +
+//     "    <h2>" +
+//     responseText +
+//     "    </h2>" +
+//     "  </body>" +
+//     "</html>"
+// }
+
 database.connect( process.env.CONNECTIONSTRING )
+
+// const hostname = '127.0.0.1';
+// const port = 8000;
+//
+// const server = http.createServer((req, res) => {
+//   res.statusCode = 200
+//   res.setHeader('Content-Type', 'text/plain')
+//   res.end('Hello, World!\n');
+// })
+//
+// server.listen(port, hostname, () => {
+//   console.log(`Server running at http://${hostname}:${port}/`)
+// })
+
+const server = ronin.server()
 
 server.use( '/bcapp', (req, res) => {
   const urlQuery = url.parse(req.url, true).query
