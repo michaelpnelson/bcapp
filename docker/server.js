@@ -17,17 +17,17 @@ function validate(urlQuery) {
   }
 }
 
-const myUrl = "https://example.com";
-
-const get_data = async myUrl => {
-  try {
-    const response = await fetch(myUrl);
-    const json = await response.json();
-    return json
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const myUrl = "https://example.com";
+//
+// const get_data = async myUrl => {
+//   try {
+//     const response = await fetch(myUrl);
+//     const json = await response.json();
+//     return json
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 // getData(url);
 function callOpenMaps(urlQuery) {
@@ -80,7 +80,7 @@ server.use( '/bcapp', (req, res) => {
     return res.json({"error":errorMessage})
   }
   // const myResponse = get_data
-  // const result = callOpenMaps(urlQuery)
+  const result = callOpenMaps(urlQuery)
   // return result
   return res.json({"status": "done"})
 })
