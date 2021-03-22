@@ -1,4 +1,3 @@
-// const http = require('http')
 const url = require('url')
 const syncrequest = require('sync-request')
 const ronin     = require( 'ronin-server' )
@@ -33,33 +32,6 @@ function callOpenMaps(urlQuery) {
   }
   return JSON.parse(body).features[0].properties['CMNTY_HLTH_SERV_AREA_NAME']
 }
-
-// function htmlResponse(responseText) {
-//   return "<!DOCTYPE html>" +
-//     "<html lang='en' dir='ltr'>" +
-//     "  <head>" +
-//     "    <meta charset='utf-8'>" +
-//     "    <title>BC Community Health Service Area Finder</title>" +
-//     "  </head>" +
-//     "  <body>" +
-//     "    <h2>" +
-//     responseText +
-//     "    </h2>" +
-//     "  </body>" +
-//     "</html>"
-// }
-// const hostname = '127.0.0.1';
-// const port = 8000;
-//
-// const server = http.createServer((req, res) => {
-//   res.statusCode = 200
-//   res.setHeader('Content-Type', 'text/plain')
-//   res.end('Hello, World!\n');
-// })
-//
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`)
-// })
 
 function incrementApiCallNumInDatabase() {
   const mysqlConnection = mysql.createConnection({
@@ -99,6 +71,6 @@ server.use( '/bcapp', (req, res) => {
     return res.json({"error":longErrorMessage})
   }
   const result = callOpenMaps(urlQuery)
-  return res.json({"CMNTY_HLTH_SERV_AREA_NAME": result})
+  return res.json({"Community Health Service Area": result})
 })
 server.start()

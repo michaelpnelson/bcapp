@@ -1,28 +1,5 @@
 version: '3.8'
 services:
-  # db:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-mysql
-  #   image: mysql
-  #   command: --default-authentication-plugin=mysql_native_password
-  #   restart: always
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: michael
-  #     MYQL_DATABASE: bcapp
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 3366:8080
-  # nodejs:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-nodejs
-  #   # image: nodejs
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8080:8000"
  notes:
   build:
    context: .
