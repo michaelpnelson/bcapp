@@ -10,7 +10,7 @@ From a command line,
 
 Using the application:
 * Open the file "index.html" in a browser
-* Enter latitude and longitude values and press the "Send" buttons
+* Enter latitude and longitude values and press the "Send" button
 
 Viewing the number of API calls made:
 From a command line,
