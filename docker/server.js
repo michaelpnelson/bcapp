@@ -77,7 +77,7 @@ function incrementApiCallNumInDatabase() {
     }
     console.log('connected as id ' + mysqlConnection.threadId)
   })
-  mysqlConnection.query('use bcapp; UPDATE api_calls SET num_calls = num_calls + 1;', function(error, results, fields){
+  mysqlConnection.query('UPDATE api_calls SET num_calls = num_calls + 1;', function(error, results, fields){
     if (error) {
       console.log(error)
     }
