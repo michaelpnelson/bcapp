@@ -9,6 +9,14 @@ function validate(value, name) {
   if (!value) {
     return `No value was found for '${name}'. Please ensure a value was entered.`
   }
+  var trimmedValue = value.trim()
+  if (trimmedValue.startsWith('+') || trimmedValue.startsWith('-')) {
+    trimmedValue = trimmedValue.substring(1)
+  }
+  let expression = /\d+\.?\d+/
+  if (!expression.test(trimmedValue)) {
+    return `The value ${value} is not valid. A valid value should be a decimal number, optionally preceded by + or -.`
+  }
 }
 
 function callOpenMaps(urlQuery) {
@@ -20,6 +28,9 @@ function callOpenMaps(urlQuery) {
   const apiUrl = `http://openmaps.gov.bc.ca/geo/pub/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=pub%3AWHSE_ADMIN_BOUNDARIES.BCHA_CMNTY_HEALTH_SERV_AREA_SP&srsname=EPSG%3A4326&cql_filter=INTERSECTS(SHAPE%2CSRID%3D4326%3BPOINT(${urlQuery['long']}${lat}))&propertyName=CMNTY_HLTH_SERV_AREA_CODE%2CCMNTY_HLTH_SERV_AREA_NAME&outputFormat=application%2Fjson`
   const response = syncrequest('GET', apiUrl)
   const body = response.getBody('utf-8')
+  if (!body || JSON.parse(body).totalFeatures == 0) {
+    return "No result was found for the latitude and longitude values given."
+  }
   return JSON.parse(body).features[0].properties['CMNTY_HLTH_SERV_AREA_NAME']
 }
 
